@@ -54,4 +54,6 @@ dkms.conf
 # debug information files
 *.dwo
 
-C_exercises/**/main
+C_exercises/*/main
+C_exercises/*/*/main
+C_exercises/*/*/*/main
