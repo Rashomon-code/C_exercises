@@ -57,3 +57,4 @@ dkms.conf
 C_exercises/*/main
 C_exercises/*/*/main
 C_exercises/*/*/*/main
+**/bin/*
