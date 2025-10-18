@@ -11,7 +11,7 @@ typedef struct{
     Subject *subjects;
 }Student;
 
-int add_student(int *capacity);
+int add_student(int *capacity, int *count, Student **students);
 int delete_student(void);
 int edit_student(void);
 int find_student(void);

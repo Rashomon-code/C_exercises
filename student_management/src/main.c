@@ -2,12 +2,12 @@
 #include "io.h"
 #include "student.h"
 #include <stdlib.h>
-#include "io.h"
+#include "menu.h"
 
 int main(void){
     int choice, check = 0, count = 0;
     size_t capacity = 1;
-    Student *students;
+    Student *students = NULL;
 
     for(;;){
         put_menu();
@@ -23,7 +23,11 @@ int main(void){
 
         switch(choice){
             case 1:
-                add_student();
+                check = add_student(&capacity, &count, &students);
+                if(check == 1){
+                    free(students);
+                    return 1;
+                }
                 break;
             case 2:
                 delete_student();
