@@ -5,13 +5,19 @@
 #include "menu.h"
 
 int main(void){
-    int choice, check = 0, count = 0;
-    size_t capacity = 1;
+    int count, check;
+    size_t capacity;
     Student *students = NULL;
+
+    check = init(&students, &capacity, &count);
+    if(check == 1){
+        return 1;
+    }
 
     for(;;){
         put_menu();
-        choice = get_choice();
+        printf("> ");
+        int choice = get_choice();
         if(choice == -1){
             return 1;
         }
@@ -23,7 +29,7 @@ int main(void){
 
         switch(choice){
             case 1:
-                check = add_student(&capacity, &count, &students);
+                check = add_student(&capacity, &students);
                 if(check == 1){
                     free(students);
                     return 1;
@@ -33,7 +39,7 @@ int main(void){
                 delete_student();
                 break;
             case 3:
-                exit_student();
+                edit_student();
                 break;
             case 4:
                 find_student();

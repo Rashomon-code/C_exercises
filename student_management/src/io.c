@@ -21,6 +21,8 @@ int get_choice(void){
 
         if(strchr(buffer, '\n') == NULL){
             fprintf(stderr, "Input too long.\n");
+            int ch;
+            while((ch = getchar()) != '\n' && ch != EOF);
             continue;
         }else{
             buffer[strcspn(buffer, "\n")] = '\0';
@@ -39,5 +41,25 @@ int get_choice(void){
         }
         
         return (int)num;
+    }
+}
+
+int get_string_input(size_t size, char *sptr){
+    for(;;){
+        if(fgets(sptr, size, stdin) == NULL){
+            perror("Error.");
+            return 1;
+        }
+
+        if(strchr(sptr, '\n') == NULL){
+            fprintf(stderr, "Input too long.\n");
+            int c;
+            while((c = getchar()) != '\n' && c != EOF);
+            continue;
+        }else{
+            sptr[strcspn(sptr, "\n")] = '\0';
+        }
+
+        return 0;
     }
 }

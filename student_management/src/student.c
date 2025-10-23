@@ -3,43 +3,52 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int add_student(size_t *capacity, int *count, Student **students){
-    if(*count == 0){
-        *students = malloc(sizeof(Student));
-        if(!*students){
-            perror("Memory allocation failed.");
-            return 1;
-        }
+int init(Student **student, size_t *capacity, int *count){
+    *count = 0;
+
+    *capacity = 1;
+    *student = malloc(*capacity * sizeof(Student));
+    if(*student == NULL){
+        perror("Memory allocation failed.");
+        return 1;
     }
 
+    return 0;
+}
+
+
+int add_student(int *count, size_t *capacity, Student **students){
     if(*count >= *capacity){
         *capacity *= 2;
-        Student *tmp = realloc(*students, *capacity * sizeof(Student));
+        Student *tmp = realloc(*students, sizeof(Student) * *capacity);
         if(!tmp){
-            perror("Memory reallocation failed.");
+            perror("Error: Memory reallocation failed.");
             return 1;
         }else{
             *students = tmp;
         }
     }
 
-    int check = 0;
-    printf("Enter student's name please.\n");
-    check = get_char_input(sizeof(Student.name), (*students + *count)->name);
-    if(check == 1){
-        perror("Input error.");
-        return check;
-    }
-    
-    printf("Do you want to add the subject.(Y/n)\n");
+    Student new_student;
+    new_student = create_student();
 
-    for(;;){
-        int choice = get_yes_or_no();
-        if(choice == 1){
-            perror("Input error.");
-            return 1;
-        }else if(choice == 'y'){
-            check = add_subject();
-        }
-    }
+    return 0;
+}
+
+int delete_student(void){
+    return 0;
+}
+int edit_student(void){
+    return 0;
+}
+int find_student(void){
+    return 0;
+}
+
+int create_student(Student *new){
+
+}
+
+int add_subject(Student *student){
+    return 0;
 }
