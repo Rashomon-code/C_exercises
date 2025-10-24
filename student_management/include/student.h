@@ -1,7 +1,7 @@
-#include <stdlib.h>
-
 #ifndef STUDENT_H
 #define STUDENT_H
+
+#include <stdlib.h>
 
 typedef struct {
     char title[51];
@@ -12,6 +12,8 @@ typedef struct{
     char name[51];
     Subject *subjects;
     int subject_count;
+    int subject_capacity;
+    int id;
 }Student;
 
 int init(Student **student, size_t *capacitya, int *count);
@@ -21,7 +23,7 @@ int delete_student(void);
 int edit_student(void);
 int find_student(void);
 
-int create_student(Student *new);
+Student create_student(void);
 int add_subject(Student *student);
 
 #endif

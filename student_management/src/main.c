@@ -29,7 +29,7 @@ int main(void){
 
         switch(choice){
             case 1:
-                check = add_student(&capacity, &students);
+                check = add_student(&count, &capacity, &students);
                 if(check == 1){
                     free(students);
                     return 1;

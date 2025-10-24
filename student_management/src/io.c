@@ -63,3 +63,42 @@ int get_string_input(size_t size, char *sptr){
         return 0;
     }
 }
+
+int get_yes_or_no(void){
+    int ch;
+
+    for(;;){
+        ch = getchar();
+        if(ch == EOF){
+            perror("Error.");
+            return '\0';
+        }
+        
+        if(ch == '\n'){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+
+        int p, count = 0;;
+        while((p = getchar()) != '\n' && p != EOF){
+            count++;
+        }
+
+        if(count >= 1){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+
+        if(ch == 'y' || ch == 'Y' || ch == 'n' || ch == 'N'){
+            break;
+        }else{
+            printf("(Y/n): ");
+        }
+    }
+
+    return ch;
+}
+
+int get_score(float *score){
+    return 0;
+}
