@@ -60,7 +60,7 @@ Student create_student(void){
     printf("Enter student name: ");
     check = get_string_input(sizeof(stu.name), stu.name);
     if(check == 1){
-        fprintf(stderr, "Count not get name input.\n");
+        fprintf(stderr, "Coult not get name input.\n");
         stu.id = 1;
         return stu;
     }
@@ -69,7 +69,7 @@ Student create_student(void){
     do{
         check = add_subject(&stu);
         if(check == 1){
-            fprintf(stderr, "Count not add subjects.\n");
+            fprintf(stderr, "Coult not add subjects.\n");
             stu.id = 1;
             return stu;
         }
@@ -109,6 +109,10 @@ int add_subject(Student *student){
     }
 
     printf("Enter the score: ");
+    check = get_score(&(student->subjects->score));
+    if(check == 1){
+        return 1;
+    }
     
     return 0;
 }

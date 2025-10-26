@@ -100,5 +100,44 @@ int get_yes_or_no(void){
 }
 
 int get_score(float *score){
+    char buffer[8];
+    char *endptr;
+    float scr;
+
+    for(;;){
+        if(fgets(buffer, 8, stdin) == NULL){
+            perror("Could not get score.");
+            return 1;
+        }
+
+        if(buffer[0] == '\n'){
+            fprintf(stderr, "Empty input.\n");
+            continue;
+        }
+
+        if(strchr(buffer, '\n') == NULL){
+            fprintf(stderr, "Input too long.\n");
+            int ch;
+            while((ch = getchar()) != '\n' && ch != EOF);
+            continue;
+        }else{
+            buffer[strcspn(buffer, "\n")] = '\0';
+        }
+
+        scr = strtof(buffer, &endptr);
+        if(*endptr != '\0'){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+
+        if(scr > 100.0F || scr < 0.0F){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+        
+        break;
+    }
+
+    *score = scr;
     return 0;
 }
