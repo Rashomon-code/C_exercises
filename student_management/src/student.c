@@ -2,6 +2,7 @@
 #include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 
 int init(Student **student, size_t *capacity, int *count){
     *count = 0;
@@ -30,7 +31,7 @@ int add_student(int *count, size_t *capacity, Student **students){
     }
 
     Student new_student;
-    new_student = create_student();
+    new_student = create_student(*count);
     if(new_student.id == 1){
         return 1;
     }else{
@@ -51,7 +52,7 @@ int find_student(void){
     return 0;
 }
 
-Student create_student(void){
+Student create_student(int count){
     Student stu;
     stu.subject_count = 0;
     int check;
@@ -77,6 +78,8 @@ Student create_student(void){
         puts("Do you want to continue?(Y/n)");
         choice = get_yes_or_no();
     }while(choice == 'y' || choice == 'Y');
+
+    stu.id = create_id(count);
     
     return stu;
 }
@@ -115,4 +118,18 @@ int add_subject(Student *student){
     }
     
     return 0;
+}
+
+int create_id(int count){
+    time_t now;
+    struct tm *info;
+    long id;
+    char buffer[16];
+
+    time(&now);
+    info = localtime(&now);
+    sprintf(buffer, "%d%05d", info->tm_year + 1900, count);
+    id = strtol(buffer, NULL, 10);
+
+    return (int)id;
 }

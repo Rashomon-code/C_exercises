@@ -23,7 +23,8 @@ int delete_student(void);
 int edit_student(void);
 int find_student(void);
 
-Student create_student(void);
+Student create_student(int count);
 int add_subject(Student *student);
+int create_id(int count);
 
 #endif
