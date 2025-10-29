@@ -31,7 +31,7 @@ int main(void){
             case 1:
                 check = add_student(&count, &capacity, &students);
                 if(check == 1){
-                    free(students);
+                    free_memory(&students, count);
                     return 1;
                 }
                 break;
@@ -47,5 +47,6 @@ int main(void){
         }
     }
 
+    free_memory(&students, count);
     return 0;
 }

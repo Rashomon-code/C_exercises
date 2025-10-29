@@ -27,4 +27,5 @@ Student create_student(int count);
 int add_subject(Student *student);
 int create_id(int count);
 
+void free_memory(Student **students, int count);
 #endif

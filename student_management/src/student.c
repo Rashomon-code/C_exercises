@@ -133,3 +133,11 @@ int create_id(int count){
 
     return (int)id;
 }
+
+void free_memory(Student **students, int count){
+    for(int i = 0; i < count; i++){
+        free((*students + i)->subjects);
+    }
+    free(*students);
+    *students = NULL;
+}
