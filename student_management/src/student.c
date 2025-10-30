@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "menu.h"
 
 int init(Student **student, size_t *capacity, int *count){
     *count = 0;
@@ -48,8 +49,18 @@ int delete_student(void){
 int edit_student(void){
     return 0;
 }
-int find_student(void){
-    return 0;
+void find_student(void){
+    search_menu();
+    int choice = get_choice(0, 2);
+    if(choice == 0){
+        return;
+    }
+    switch(choice){
+        case 1: 
+            break;
+        case 2:
+            break;
+    }
 }
 
 Student create_student(int count){
@@ -112,10 +123,12 @@ int add_subject(Student *student){
     }
 
     printf("Enter the score: ");
-    check = get_score(&(student->subjects->score));
+    check = get_score(&((student->subjects + student->subject_count)->score));
     if(check == 1){
         return 1;
     }
+
+    student->subject_count++;
     
     return 0;
 }

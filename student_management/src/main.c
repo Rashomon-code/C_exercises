@@ -16,8 +16,7 @@ int main(void){
 
     for(;;){
         put_menu();
-        printf("> ");
-        int choice = get_choice();
+        int choice = get_choice(0, 5);
         if(choice == -1){
             return 1;
         }
@@ -44,6 +43,8 @@ int main(void){
             case 4:
                 find_student();
                 break;
+            case 5:
+                print_all_students(students, count);
         }
     }
 

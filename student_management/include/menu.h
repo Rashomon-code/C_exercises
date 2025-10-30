@@ -2,5 +2,6 @@
 #define MENU_H
 
 void put_menu(void);
+void search_menu(void);
 
 #endif

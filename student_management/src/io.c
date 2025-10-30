@@ -3,7 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-int get_choice(void){
+int get_choice(int min, int max){
     char *endptr;
     char buffer[8];
     long num;
@@ -15,12 +15,12 @@ int get_choice(void){
         }
 
         if(buffer[0] == '\n'){
-            fprintf(stderr, "Empty input.\n");
+            fprintf(stderr, "Empty input.\n> ");
             continue;
         }
 
         if(strchr(buffer, '\n') == NULL){
-            fprintf(stderr, "Input too long.\n");
+            fprintf(stderr, "Input too long.\n> ");
             int ch;
             while((ch = getchar()) != '\n' && ch != EOF);
             continue;
@@ -31,12 +31,12 @@ int get_choice(void){
         num = strtol(buffer, &endptr, 10);
 
         if(*endptr != '\0'){
-            fprintf(stderr, "Invalid input.\n");
+            fprintf(stderr, "Invalid input.\n> ");
             continue;
         }
 
-        if(num > 4L || num < 0L){
-            fprintf(stderr, "Enter 0-4 please.\n");
+        if(num > max || num < min){
+            fprintf(stderr, "Enter %d-%d please.\n> ", min, max);
             continue;
         }
         
@@ -140,4 +140,26 @@ int get_score(float *score){
 
     *score = scr;
     return 0;
+}
+
+void print_subject(Subject *subject, int count){
+    for(int i = 0; i < count; i++){
+        printf("Subject %d: %s\nScore: %.1f\n", i + 1, (subject + i)->title, (subject + i)->score);
+    }
+}
+
+void print_student(Student *sarr, int num){
+    printf("ID: %d\n", (sarr + num)->id);
+    printf("Name: %s\n", (sarr + num)->name);
+    print_subject((sarr + num)->subjects, (sarr + num)->subject_count);
+}
+
+void print_all_students(Student *sarr, int count){
+    if(count == 0){
+        puts("No student.\n");
+    }else{
+        for(int i = 0; i < count; i++){
+            print_student(sarr, i);
+        }
+    }
 }

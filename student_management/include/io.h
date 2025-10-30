@@ -1,11 +1,17 @@
-#include <stdio.h>
+#include <stddef.h>
 
 #ifndef IO_H
 #define IO_H
 
-int get_choice(void);
+#include "student.h"
+
+int get_choice(int min, int max);
 int get_string_input(size_t size, char *sptr);
 int get_yes_or_no(void);
 int get_score(float *score);
+
+void print_subject(Subject *subject, int count);
+void print_student(Student *sarr, int num);
+void print_all_students(Student *sarr, int count);
 
 #endif

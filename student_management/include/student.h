@@ -21,7 +21,7 @@ int init(Student **student, size_t *capacitya, int *count);
 int add_student(int *count, size_t *capacity, Student **students);
 int delete_student(void);
 int edit_student(void);
-int find_student(void);
+void find_student(void);
 
 Student create_student(int count);
 int add_subject(Student *student);
