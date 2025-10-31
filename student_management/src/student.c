@@ -1,4 +1,5 @@
 #include "student.h"
+#include <string.h>
 #include "io.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -49,7 +50,7 @@ int delete_student(void){
 int edit_student(void){
     return 0;
 }
-void find_student(void){
+void find_student(Student *sptr, int count){
     search_menu();
     int choice = get_choice(0, 2);
     if(choice == 0){
@@ -57,8 +58,10 @@ void find_student(void){
     }
     switch(choice){
         case 1: 
+            search_by_name(sptr, count);
             break;
         case 2:
+            search_by_id(sptr,count);
             break;
     }
 }
@@ -145,6 +148,49 @@ int create_id(int count){
     id = strtol(buffer, NULL, 10);
 
     return (int)id;
+}
+
+void search_by_name(Student *sptr, int count){
+    char target[51];
+    printf("Enter the name: ");
+    int check = get_string_input(sizeof(sptr->name), target);
+    if(check == 1){
+        return;
+    }
+
+    for(int i = 0; i < count; i++){
+        if(strcmp(target, (sptr + i)->name) == 0){
+            check = 1;
+            print_student(sptr, i);
+            break;
+        }
+    }
+
+    if(check == 0){
+        puts("Could not find the student.");
+    }
+}
+
+void search_by_id(Student *sptr, int count){
+    int target;
+    int check = 0;
+    printf("Enter the ID: ");
+    target = get_id();
+    if(target == -1){
+        return;
+    }
+
+    for(int i = 0; i < count; i++){
+        if((sptr + i)->id == target){
+            check = 1;
+            print_student(sptr, i);
+            break;
+        }
+    }
+    
+    if(check == 0){
+        puts("Could not find the student.");
+    }
 }
 
 void free_memory(Student **students, int count){

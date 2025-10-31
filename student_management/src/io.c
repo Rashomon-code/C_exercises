@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <errno.h>
 
 int get_choice(int min, int max){
     char *endptr;
@@ -140,6 +141,49 @@ int get_score(float *score){
 
     *score = scr;
     return 0;
+}
+
+int get_id(void){
+    long id;
+    char buffer[16];
+    char *endptr;
+
+    for(;;){
+        if(fgets(buffer, 16, stdin) == NULL){
+            perror("Could not get id.");
+            return -1;
+        }
+
+        if(buffer[0] == '\n'){
+            fprintf(stderr, "Empty input.\n");
+            continue;
+        }
+
+        if(strchr(buffer, '\n') == NULL){
+            fprintf(stderr, "Input too long.\n");
+            int ch;
+            while((ch = getchar()) != '\n' && ch != EOF);
+            continue;
+        }else{
+            buffer[strcspn(buffer, "\n")] = '\0';
+        }
+
+        errno = 0;
+        id = strtol(buffer, &endptr, 10);
+
+        if(errno == ERANGE){
+            fprintf(stderr, "Out of range.\n");
+            continue;
+        }
+
+        if(*endptr != '\0'){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+        
+        break;
+    }
+    return (int)id;
 }
 
 void print_subject(Subject *subject, int count){

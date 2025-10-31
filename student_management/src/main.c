@@ -41,7 +41,7 @@ int main(void){
                 edit_student();
                 break;
             case 4:
-                find_student();
+                find_student(students, count);
                 break;
             case 5:
                 print_all_students(students, count);
