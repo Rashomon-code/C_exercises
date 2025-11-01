@@ -3,5 +3,6 @@
 
 void put_menu(void);
 void search_menu(void);
+void edit_menu(void);
 
 #endif

@@ -19,3 +19,12 @@ void search_menu(void){
     printf("0. Exit search.\n");
     printf("> ");
 }
+
+void edit_menu(void){
+    printf("Enter the number of the menu.\n");
+    printf("1. Edit the name.\n");
+    printf("2. Edit the subject.\n");
+    printf("3. Check.\n");
+    printf("0. Exit edit.\n");
+    printf("> ");
+}

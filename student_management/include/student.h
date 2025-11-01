@@ -19,16 +19,16 @@ typedef struct{
 int init(Student **student, size_t *capacitya, int *count);
 
 int add_student(int *count, size_t *capacity, Student **students);
-int delete_student(void);
-int edit_student(void);
+int delete_student(Student *sptr, int *count);
+int edit_student(Student *sptr, int count);
 void find_student(Student *sptr, int count);
 
 Student create_student(int count);
 int add_subject(Student *student);
 int create_id(int count);
 
-void search_by_name(Student *sptr, int count);
-void search_by_id(Student *sptr, int count);
+int search_by_name(Student *sptr, int count);
+int search_by_id(Student *sptr, int count);
 
 void free_memory(Student **students, int count);
 #endif

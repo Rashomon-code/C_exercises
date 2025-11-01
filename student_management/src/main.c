@@ -35,16 +35,23 @@ int main(void){
                 }
                 break;
             case 2:
-                delete_student();
+                check = delete_student(students, &count);
+                if(check == 1){
+                    fprintf(stderr, "Delete failed.\n");
+                }
                 break;
             case 3:
-                edit_student();
+                check = edit_student(students, count);
+                if(check = 1){
+                    fprintf(stderr, "Edit failed.\n");
+                }
                 break;
             case 4:
                 find_student(students, count);
                 break;
             case 5:
                 print_all_students(students, count);
+                break;
         }
     }
 

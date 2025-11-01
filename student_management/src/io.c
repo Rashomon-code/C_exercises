@@ -200,7 +200,7 @@ void print_student(Student *sarr, int num){
 
 void print_all_students(Student *sarr, int count){
     if(count == 0){
-        puts("No student.\n");
+        puts("No student.");
     }else{
         for(int i = 0; i < count; i++){
             print_student(sarr, i);

@@ -44,25 +44,72 @@ int add_student(int *count, size_t *capacity, Student **students){
     return 0;
 }
 
-int delete_student(void){
+int delete_student(Student *sptr, int *count){
+    printf("Enter the ID you want to delete.\n> ");
+    int target;
+    target = search_by_id(sptr, *count);
+    if(target == -1){
+        return 1;
+    }
+    
+    for(int i = target; i < *count - 1; i++){
+        sptr[i] = sptr[i + 1];
+    }
+
+    (*count)--;
+    puts("Successful.");
+
     return 0;
 }
-int edit_student(void){
-    return 0;
+
+int edit_student(Student *sptr, int count){
+    printf("Enter the ID you want to edit.\n> ");
+    int target;
+    target = search_by_id(sptr, count);
+    if(target == -1){
+        return 1;
+    }
+
+    for(;;){
+        edit_menu();
+        int choice = get_choice(0, 3);
+        if(choice == -1){
+            return 1;
+        }
+        if(choice == 0){
+            return 0;
+        }
+
+        switch(choice){
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                print_student(sptr, target);
+                break;
+        }
+    }
 }
+
 void find_student(Student *sptr, int count){
     search_menu();
     int choice = get_choice(0, 2);
     if(choice == 0){
         return;
     }
+    int target;
     switch(choice){
         case 1: 
-            search_by_name(sptr, count);
+            target = search_by_name(sptr, count);
             break;
         case 2:
-            search_by_id(sptr,count);
+            target = search_by_id(sptr,count);
             break;
+    }
+
+    if(target >= 0){
+        print_student(sptr, target);
     }
 }
 
@@ -150,47 +197,40 @@ int create_id(int count){
     return (int)id;
 }
 
-void search_by_name(Student *sptr, int count){
+int search_by_name(Student *sptr, int count){
     char target[51];
     printf("Enter the name: ");
     int check = get_string_input(sizeof(sptr->name), target);
     if(check == 1){
-        return;
+        return -1;
     }
 
     for(int i = 0; i < count; i++){
         if(strcmp(target, (sptr + i)->name) == 0){
-            check = 1;
-            print_student(sptr, i);
-            break;
+            return i;
         }
     }
 
-    if(check == 0){
-        puts("Could not find the student.");
-    }
+    puts("Could not find the student.");
+    return -1;
 }
 
-void search_by_id(Student *sptr, int count){
+int search_by_id(Student *sptr, int count){
     int target;
-    int check = 0;
     printf("Enter the ID: ");
     target = get_id();
     if(target == -1){
-        return;
+        return -1;
     }
 
     for(int i = 0; i < count; i++){
         if((sptr + i)->id == target){
-            check = 1;
-            print_student(sptr, i);
-            break;
+            return i;
         }
     }
     
-    if(check == 0){
-        puts("Could not find the student.");
-    }
+    puts("Could not find the student.");
+    return -1;
 }
 
 void free_memory(Student **students, int count){
