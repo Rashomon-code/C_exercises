@@ -73,17 +73,27 @@ int edit_student(Student *sptr, int count){
     for(;;){
         edit_menu();
         int choice = get_choice(0, 3);
-        if(choice == -1){
-            return 1;
-        }
-        if(choice == 0){
-            return 0;
+        int check;
+        if(choice == -1 || choice == 0){
+            return choice;
         }
 
         switch(choice){
             case 1:
+                check = edit_name(sptr, target);
+                if(check == 1){
+                    return 1;
+                }else{
+                    return 0;
+                }
                 break;
             case 2:
+                check = edit_subject(sptr, target);
+                if(check == -1){
+                    return 1;
+                }else{
+                    return 0;
+                }
                 break;
             case 3:
                 print_student(sptr, target);
@@ -183,6 +193,36 @@ int add_subject(Student *student){
     return 0;
 }
 
+int delete_subject(Student *student){
+    print_subject(student->subjects, student->subject_count);
+    if(student->subject_count == 0){
+        return 1;
+    }
+
+    printf("Enter the subject title you want to delete: ");
+    char target[51];
+    int check = get_string_input(sizeof(target), target);
+    if(check == 1){
+        return 1;
+    }
+
+    for(int i = 0; i < student->subject_count - 1; i++){
+        if(strcmp(target, (student->subjects + i)->title) == 0){
+            student->subjects[i] = student->subjects[student->subject_count - 1];
+            check = 1;
+            break;
+        }
+    }
+
+    if(check == 1){
+        student->subject_count--;
+        return 0;
+    }else{
+        fprintf(stderr, "Could not find the student.\n");
+        return 1;
+    }
+}
+
 int create_id(int count){
     time_t now;
     struct tm *info;
@@ -195,6 +235,45 @@ int create_id(int count){
     id = strtol(buffer, NULL, 10);
 
     return (int)id;
+}
+
+int edit_name(Student *sptr, int target){
+    char new_name[51];
+    puts("Enter the new name.");
+    printf("%s -> ", sptr->name);
+
+    int check = get_string_input(sizeof(new_name), new_name);
+    if(check == 1){
+        return 1;
+    }
+
+    strcpy(sptr->name, new_name);
+    puts("Successful.");
+    return 0;
+}
+
+int edit_subject(Student *sptr, int target){
+    edit_subject_menu();
+    int choice = get_choice(0, 2);
+    if(choice == 0 || choice == -1){
+        return choice;
+    }
+
+    int check;
+    switch(choice){
+        case 1:
+            check = add_subject(sptr + target);
+            break;
+        case 2:
+            check = delete_subject(sptr + target);
+            break;
+    }
+    if(check == 1){
+        return -1;
+    }else{
+        puts("Successful.");
+        return 1;
+    }
 }
 
 int search_by_name(Student *sptr, int count){

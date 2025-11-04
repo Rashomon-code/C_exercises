@@ -187,8 +187,12 @@ int get_id(void){
 }
 
 void print_subject(Subject *subject, int count){
-    for(int i = 0; i < count; i++){
-        printf("Subject %d: %s\nScore: %.1f\n", i + 1, (subject + i)->title, (subject + i)->score);
+    if(count == 0){
+        puts("No subject.");
+    }else{
+        for(int i = 0; i < count; i++){
+            printf("Subject %d: %s\nScore: %.1f\n\n", i + 1, (subject + i)->title, (subject + i)->score);
+        }
     }
 }
 

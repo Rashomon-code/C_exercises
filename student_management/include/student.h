@@ -25,7 +25,11 @@ void find_student(Student *sptr, int count);
 
 Student create_student(int count);
 int add_subject(Student *student);
+int delete_subject(Student *student);
 int create_id(int count);
+
+int edit_name(Student *sptr, int target);
+int edit_subject(Student *sptr, int target);
 
 int search_by_name(Student *sptr, int count);
 int search_by_id(Student *sptr, int count);
