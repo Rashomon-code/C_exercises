@@ -5,18 +5,68 @@
 #include <stdlib.h>
 #include <time.h>
 #include "menu.h"
+#include "errno.h"
 
 int init(Student **student, size_t *capacity, int *count){
-    *count = 0;
+    errno = 0;
+    FILE *fp = fopen("students.dat", "rb");
+    if(fp == NULL){
+        if(errno == ENOENT){
+            *count = 0;
+            *capacity = 1;
+            *student = malloc(*capacity * sizeof(Student));
+            if(*student == NULL){
+                perror("Memory allocation failed.");
+                return 1;
+            }
+            return 0;
+        }else{
+            perror("Something is wrong.");
+            return 1;
+        }
+    }else{
+        if(fseek(fp, 0, SEEK_END) != 0){
+            perror("Fseek error.");
+            fclose(fp);
+            return 1;
+        }
 
-    *capacity = 1;
-    *student = malloc(*capacity * sizeof(Student));
-    if(*student == NULL){
-        perror("Memory allocation failed.");
-        return 1;
+        long filesize = ftell(fp);
+        if(filesize == -1L){
+            perror("ftell failed");
+            fclose(fp);
+            return 1;
+        }
+
+        if(filesize % sizeof(Student) != 0){
+            fprintf(stderr, "File size is not aligned with Student struct.\nPlease check the file.\n");
+        }
+        rewind(fp);
+
+        *count = filesize / sizeof(Student);
+        *capacity = *count + 1;
+        *student = malloc(*capacity * sizeof(Student));
+        if(*student == NULL){
+            perror("Memory allocation failed.");
+            fclose(fp);
+            return 1;
+        }
+
+        size_t n = fread(*student, sizeof(Student), *count, fp);
+        if(n < *count){
+            if(feof(fp)){
+                fprintf(stderr, "Unexpected end of file.\n");
+            }else if(ferror(fp)){
+                perror("Reading error.");
+            }
+            free(*student);
+            fclose(fp);
+            return 1;
+        }
+
+        fclose(fp);
+        return 0;
     }
-
-    return 0;
 }
 
 
