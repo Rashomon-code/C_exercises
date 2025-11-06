@@ -56,4 +56,4 @@ dkms.conf
 # -------------------------
 # Project-specific data
 # -------------------------
-data/generated/ # 忽略 生成資料
+**/data/generated/
