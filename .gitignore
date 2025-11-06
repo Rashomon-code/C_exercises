@@ -1,18 +1,15 @@
-# Prerequisites
-*.d
-
-# Object files
+# -------------------------
+# Build / Object files
+# -------------------------
 *.o
 *.ko
 *.obj
 *.elf
-
-# Linker output
 *.ilk
 *.map
 *.exp
 
-# Precompiled Headers
+# Precompiled headers
 *.gch
 *.pch
 
@@ -22,7 +19,7 @@
 *.la
 *.lo
 
-# Shared objects (inc. Windows DLLs)
+# Shared objects
 *.dll
 *.so
 *.so.*
@@ -35,14 +32,19 @@
 *.i*86
 *.x86_64
 *.hex
+**/main         # 可忽略特定可執行檔
+**/bin/*        # 忽略 bin 下所有內容
 
-# Debug files
+# Debug / temporary files
 *.dSYM/
 *.su
 *.idb
 *.pdb
+*.dwo
+*.log
+*.tmp
 
-# Kernel Module Compile Results
+# Kernel module / Linux specific
 *.mod*
 *.cmd
 .tmp_versions/
@@ -51,8 +53,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
-# debug information files
-*.dwo
-
-**/main
-**/bin/*
+# -------------------------
+# Project-specific data
+# -------------------------
+data/generated/ # 忽略 生成資料

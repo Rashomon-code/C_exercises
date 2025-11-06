@@ -22,8 +22,17 @@ int main(void){
         }
 
         if(choice == 0){
-            puts("Bye!");
-            break;
+            check = save_students(students, count);
+            if(check == 0){
+                puts("Bye!");
+                break;
+            }else{
+                printf("Exit regardless?(Y/n)");
+                int yorn = get_yes_or_no();
+                if(yorn == 'y' || yorn == 'Y'){
+                    break;
+                }
+            }
         }
 
         switch(choice){

@@ -9,7 +9,7 @@
 
 int init(Student **student, size_t *capacity, int *count){
     errno = 0;
-    FILE *fp = fopen("students.dat", "rb");
+    FILE *fp = fopen("data/generated/students.dat", "rb");
     if(fp == NULL){
         if(errno == ENOENT){
             *count = 0;
@@ -25,50 +25,75 @@ int init(Student **student, size_t *capacity, int *count){
             return 1;
         }
     }else{
-        if(fseek(fp, 0, SEEK_END) != 0){
-            perror("Fseek error.");
+        size_t check = 0;
+        check = fread(count, sizeof(int), 1, fp);
+        if(check != 1){
+            fprintf(stderr, "Could not load file.\n");
             fclose(fp);
             return 1;
         }
-
-        long filesize = ftell(fp);
-        if(filesize == -1L){
-            perror("ftell failed");
-            fclose(fp);
-            return 1;
-        }
-
-        if(filesize % sizeof(Student) != 0){
-            fprintf(stderr, "File size is not aligned with Student struct.\nPlease check the file.\n");
-        }
-        rewind(fp);
-
-        *count = filesize / sizeof(Student);
-        *capacity = *count + 1;
-        *student = malloc(*capacity * sizeof(Student));
+        *student = malloc(*count * sizeof(Student));
         if(*student == NULL){
             perror("Memory allocation failed.");
             fclose(fp);
             return 1;
         }
 
-        size_t n = fread(*student, sizeof(Student), *count, fp);
-        if(n < *count){
-            if(feof(fp)){
-                fprintf(stderr, "Unexpected end of file.\n");
-            }else if(ferror(fp)){
-                perror("Reading error.");
+        for(int i = 0; i < *count; i++){
+            fread((*student + i)->name, 51, 1, fp);
+            fread(&(*student + i)->subject_count, sizeof(int), 1, fp);
+            fread(&(*student + i)->subject_capacity, sizeof(int), 1, fp);
+            fread(&(*student + i)->id, sizeof(int), 1, fp);
+            if((*student + i)->subject_count == 0){
+                //(*student + i)->subjects == NULL;
+                continue;
+            }else{
+                (*student + i)->subjects = malloc((*student + i)->subject_capacity * sizeof(Subject));
+                if((*student + i)->subjects == NULL){
+                    perror("Subjects memory allocation failed.");
+                    fclose(fp);
+                    return 1;
+                }
+                fread((*student + i)->subjects, sizeof(Subject), (*student + i)->subject_count, fp);
             }
-            free(*student);
-            fclose(fp);
-            return 1;
         }
-
-        fclose(fp);
-        return 0;
     }
+    fclose(fp);
+    return 0;
 }
 
+int save_students(Student *sptr, int count){
+    if(count == 0){
+        return 0;
+    }
+
+    FILE *fp = fopen("data/generated/students.dat", "wb");
+    if(!fp){
+        perror("Could not open the file.");
+        return 1;
+    }
+
+    size_t check = fwrite(&count, sizeof(int), 1, fp);
+    if(check != 1){
+        fprintf(stderr, "Could not save data.\n");
+        fclose(fp);
+        return 1;
+    }
+    for(int i = 0; i < count; i++){
+        fwrite((sptr + i)->name, 51, 1, fp);
+        fwrite(&(sptr + i)->subject_count, sizeof(int), 1, fp);
+        fwrite(&(sptr + i)->subject_capacity, sizeof(int), 1, fp);
+        fwrite(&(sptr + i)->id, sizeof(int), 1, fp);
+        if((sptr + i)->subject_count == 0){
+            continue;
+        }else{
+            fwrite((sptr + i)->subjects, sizeof(Subject), (sptr + i)->subject_count, fp);
+        }
+    }
+    fclose(fp);
+    puts("Saved.");
+    return 0;
+}
 
 int add_student(int *count, size_t *capacity, Student **students){
     if(*count >= *capacity){
@@ -89,9 +114,7 @@ int add_student(int *count, size_t *capacity, Student **students){
     }else{
         *(*students + *count) = new_student;
         (*count)++;
-    }
-
-    return 0;
+    } return 0;
 }
 
 int delete_student(Student *sptr, int *count){

@@ -17,6 +17,7 @@ typedef struct{
 }Student;
 
 int init(Student **student, size_t *capacitya, int *count);
+int save_students(Student *sptr, int count);
 
 int add_student(int *count, size_t *capacity, Student **students);
 int delete_student(Student *sptr, int *count);
