@@ -279,7 +279,7 @@ int delete_subject(Student *student){
         return 1;
     }
 
-    for(int i = 0; i < student->subject_count - 1; i++){
+    for(int i = 0; i < student->subject_count; i++){
         if(strcmp(target, (student->subjects + i)->title) == 0){
             student->subjects[i] = student->subjects[student->subject_count - 1];
             check = 1;
@@ -313,14 +313,14 @@ int create_id(int count){
 int edit_name(Student *sptr, int target){
     char new_name[51];
     puts("Enter the new name.");
-    printf("%s -> ", sptr->name);
+    printf("%s -> ", (sptr + target)->name);
 
     int check = get_string_input(sizeof(new_name), new_name);
     if(check == 1){
         return 1;
     }
 
-    strcpy(sptr->name, new_name);
+    strcpy((sptr + target)->name, new_name);
     puts("Successful.");
     return 0;
 }

@@ -51,7 +51,7 @@ int main(void){
                 break;
             case 3:
                 check = edit_student(students, count);
-                if(check = 1){
+                if(check == 1){
                     fprintf(stderr, "Edit failed.\n");
                 }
                 break;
