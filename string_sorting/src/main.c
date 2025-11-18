@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "io.h"
+
+void free_memory(char **strings, int count);
+void sort(char **strings, int count);
 
 int main(void){
     int choice;
@@ -22,7 +26,7 @@ int main(void){
             tmp = realloc(strings, capacity * sizeof(*strings));
             if(tmp == NULL){
                 perror("Memory allocation failed.");
-                free(strings);
+                free_memory(strings, count);
                 return 1;
             }
         }
@@ -30,6 +34,7 @@ int main(void){
         printf("> ");
         int check = get_word(strings, count);
         if(check == 1){
+            free_memory(strings, count);
             return check;
         }
 
@@ -37,7 +42,32 @@ int main(void){
         choice = getchar();
         int ch;
         while((ch = getchar()) != '\n' && ch != EOF);
+
+        count++;
     }while(choice == 'Y' || choice == 'y');
+
+    sort(strings, count);
     
     return 0;
+}
+
+void free_memory(char **strings, int count){
+    for(int i = 0; i < count; i++){
+        free(*(strings + i));
+    }
+
+    free(strings);
+}
+
+void sort(char **strings, int count){
+    for(int i = 0; i < count - 1; i++){
+        for(int j = i + 1; j < count; j++){
+            if(strcmp(strings[i], strings[j]) > 0){
+                char *buffer;
+                buffer = strings[i];
+                strings[i] = strings[j];
+                strings[j] = buffer;
+            }
+        }
+    }
 }
