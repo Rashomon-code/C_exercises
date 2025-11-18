@@ -29,3 +29,9 @@ int get_word(char **string, int count){
         return 0;
     }
 }
+
+void print_list(char **string, int count){
+    for(int i = 0; i < count; i++){
+        printf("%s", string[i]);
+    }
+}

@@ -46,8 +46,11 @@ int main(void){
         count++;
     }while(choice == 'Y' || choice == 'y');
 
+    print_list(strings, count);
     sort(strings, count);
+    print_list(strings, count);
     
+    free_memory(strings, count);
     return 0;
 }
 
