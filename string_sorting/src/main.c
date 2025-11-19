@@ -28,6 +28,8 @@ int main(void){
                 perror("Memory allocation failed.");
                 free_memory(strings, count);
                 return 1;
+            }else{
+                strings = tmp;
             }
         }
 
