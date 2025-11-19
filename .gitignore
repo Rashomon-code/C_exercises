@@ -34,6 +34,7 @@
 *.hex
 **/main         # 可忽略特定可執行檔
 **/bin/*        # 忽略 bin 下所有內容
+bin/
 
 # Debug / temporary files
 *.dSYM/
