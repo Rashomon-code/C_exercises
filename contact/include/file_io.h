@@ -3,7 +3,7 @@
 
 #include "contact.h"
 
-int read_data(Contact **list);
+long read_data(Contact **list, long *capacity);
 int write_data(void);
 
 #endif

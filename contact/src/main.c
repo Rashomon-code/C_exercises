@@ -3,10 +3,15 @@
 #include "io.h"
 #include "contact.h"
 #include "file_io.h"
+#include <stdlib.h>
 
 int main(void){
-    Contact *list;
-    int count = read_data(&list);
+    Contact *list = NULL;
+    long capacity;
+    long count = read_data(&list, &capacity);
+    if(count == -1){
+        return 1;
+    }
 
     for(;;){
         main_menu();
@@ -14,6 +19,8 @@ int main(void){
         if(choice == -1){
             continue;
         }else if(choice == 0){
+            free(list);
+            puts("Bye.");
             return 0;
         }
 

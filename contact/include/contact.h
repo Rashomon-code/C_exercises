@@ -6,4 +6,6 @@ typedef struct{
     char phone[15];
 }Contact;
 
+int add_contact(int *count, int *capacity, Contact **list);
+
 #endif

@@ -51,3 +51,30 @@ int get_choice(int min, int max){
     return (int)choice;
     }
 }
+
+int get_yes_or_no(void){
+    char buffer[BUFFER_SIZE];
+    
+    for(;;){
+        if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
+            perror("Error!");
+            return -1;
+        }
+
+        if(buffer[1] != '\n'){
+            fprintf(stderr, "Invalid input. Try again.\n");
+            int ch;
+            while((ch = getchar()) != EOF && ch != '\n');
+            continue;
+        }
+
+        if(buffer[0] == 'y' || buffer[0] == 'Y'){
+            return 1;
+        }else if(buffer[0] == 'n' || buffer[0] == 'N'){
+            return 0;
+        }else{
+            fprintf(stderr, "Enter 'Y/n' please. Try again.\n");
+            continue;
+        }
+    }
+}
