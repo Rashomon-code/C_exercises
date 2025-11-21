@@ -78,3 +78,23 @@ int get_yes_or_no(void){
         }
     }
 }
+
+int get_string(char *string, size_t size){
+    char buffer[size];
+    for(;;){
+        if(fgets(buffer, size, stdin) == NULL){
+            perror("Could not get input.");
+            return -1;
+        }
+
+        if(strchr(buffer, '\n') == NULL){
+            fprintf(stderr, "Input too long. Try again.\n");
+            int ch;
+            while((ch = getchar()) != EOF && ch != '\n');
+            continue;
+        }
+
+        strcpy(string, buffer);
+        return 0;
+    }
+}

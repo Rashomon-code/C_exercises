@@ -26,6 +26,7 @@ int main(void){
 
         switch(choice){
             case 1:
+                add_contact(&count, &capacity, &list);
                 break;
             case 2:
                 break;
