@@ -12,10 +12,12 @@ int main(void){
     if(count == -1){
         return 1;
     }
+    int check;
 
     for(;;){
         main_menu();
         int choice = get_choice(0, 5);
+        printf("\n");
         if(choice == -1){
             continue;
         }else if(choice == 0){
@@ -26,11 +28,16 @@ int main(void){
 
         switch(choice){
             case 1:
-                add_contact(&count, &capacity, &list);
+                check = add_contact(&count, &capacity, &list);
+                if(check == -1){
+                    return -1;
+                }
                 break;
             case 2:
+                display_contact(count, list);
                 break;
             case 3:
+                search_contact(count, list);
                 break;
             case 4:
                 break;

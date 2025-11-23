@@ -92,9 +92,15 @@ int get_string(char *string, size_t size){
             int ch;
             while((ch = getchar()) != EOF && ch != '\n');
             continue;
+        }else{
+            buffer[strcspn(buffer, "\n")] = '\0';
         }
 
         strcpy(string, buffer);
         return 0;
     }
+}
+
+void print_contact(int count, Contact *list){
+    printf("Name: %s\nPhone number: %s\n\n", (list + count)->name, (list + count)->phone);
 }
