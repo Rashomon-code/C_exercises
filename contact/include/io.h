@@ -9,6 +9,6 @@
 int get_choice(int min, int max);
 int get_yes_or_no(void);
 int get_string(char *string, size_t size);
-void print_contact(int count, Contact *list);
+void print_contact(long count, Contact *list, long num);
 
 #endif

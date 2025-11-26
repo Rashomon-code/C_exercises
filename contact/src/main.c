@@ -40,6 +40,10 @@ int main(void){
                 search_contact(count, list);
                 break;
             case 4:
+                check = delete_contact(&count, list);
+                if(check == -1){
+                    return -1;
+                }
                 break;
             case 5:
                 break;

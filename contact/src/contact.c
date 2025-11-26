@@ -39,8 +39,8 @@ void display_contact(long count, Contact *list){
         return;
     }
 
-    for(int i = 0; i < count; i++){
-        print_contact(i, list);
+    for(long i = 0; i < count; i++){
+        print_contact(i, list, i);
     }
 }
 
@@ -56,74 +56,67 @@ void search_contact(long count, Contact *list){
         return;
     }
 
+    int *arr = malloc(sizeof(int) * count);
+    int j;
+
     switch(choice){
         case 1:
-            search_by_name(count, list);
+            printf("Enter the name you want to search\n> ");
+            j = search_by_name(count, list, arr);
             break;
         case 2:
-            search_by_phone_number(count, list);
+            printf("Enter the phone number you want to search.\n> ");
+            j = search_by_phone_number(count, list, arr);
             break;
     }
+
+    if(j == 0){
+        puts("No matching item found.");
+    }else{
+        for(int i = 0; i < j; i++){
+            print_contact(arr[i], list, i);
+        }
+    }
+
+    free(arr);
 }
 
-void search_by_name(long count, Contact *list){
+int search_by_name(long count, Contact *list, int *arr){
     char buffer[BUFFER_SIZE];
     
-    printf("Enter the name you want to search\n> ");
     int check = get_string(buffer, sizeof(list->name));
     printf("\n");
     if(check == -1){
-        return;
+        return -1;
     }
 
-    int arr[count];
     int j = 0;
-    int i;
-    for(i = 0; i < count; i++){
-        if(strstr(list->name, buffer) != NULL){
+    for(int i = 0; i < count; i++){
+        if(strstr((list + i)->name, buffer) != NULL){
             arr[j++] = i;
         }
     }
 
-    if(j == 0){
-        puts("No matching item found.");
-        return;
-    }
-    
-    for(i = 0; i < j; i++){
-        print_contact(i, list);
-    }
+    return j;
 }
 
-void search_by_phone_number(long count, Contact *list){
+int search_by_phone_number(long count, Contact *list, int *arr){
     char buffer[BUFFER_SIZE];
 
-    printf("Enter the phone number you want to search.\n> ");
     int check = get_string(buffer, sizeof(list->phone));
     printf("\n");
     if(check == -1){
-        return;
+        return -1;
     }
 
-    int arr[count];
     int j = 0;
-    int i;
-    for(i = 0; i < count; i++){
-        if(strstr(list->phone, buffer) != NULL){
+    for(int i = 0; i < count; i++){
+        if(strstr((list + i)->phone, buffer) != NULL){
             arr[j++] = i;
         }
     }
 
-    if(j == 0){
-        puts("No matching item found.");
-        return;
-    }
-    
-    for(i = 0; i < j; i++){
-        print_contact(i, list);
-    }
-    
-    return;
+    return j;
 }
 
 int delete_contact(long *count, Contact *list){
@@ -133,6 +126,22 @@ int delete_contact(long *count, Contact *list){
     if(check == -1){
         return -1;
     }
-    
-    
+
+    int *arr = malloc(*count * sizeof(int));
+    int contact_num = search_by_name(*count, list, arr);
+    if(contact_num == -1){
+        free(arr);
+        return -1;
+    }
+
+    if(contact_num == 0){
+        puts("No matching item found.");
+    }else{
+        for(long i = 0; i < contact_num; i++){
+            print_contact(arr[i], list, i);
+        }
+    }
+
+    free(arr);
+    return 0;
 }

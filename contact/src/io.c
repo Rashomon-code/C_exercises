@@ -101,6 +101,6 @@ int get_string(char *string, size_t size){
     }
 }
 
-void print_contact(int count, Contact *list){
-    printf("Name: %s\nPhone number: %s\n\n", (list + count)->name, (list + count)->phone);
+void print_contact(long count, Contact *list, long num){
+    printf("%ld.\nName: %s\nPhone number: %s\n\n", num + 1, (list + count)->name, (list + count)->phone);
 }
