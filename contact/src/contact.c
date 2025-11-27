@@ -120,12 +120,7 @@ int search_by_phone_number(long count, Contact *list, int *arr){
 }
 
 int delete_contact(long *count, Contact *list){
-    char buffer[BUFFER_SIZE];
     printf("Enter the name of contact you want to delete.\n> ");
-    int check = get_string(buffer, sizeof(list->name));
-    if(check == -1){
-        return -1;
-    }
 
     int *arr = malloc(*count * sizeof(int));
     int contact_num = search_by_name(*count, list, arr);
@@ -137,11 +132,20 @@ int delete_contact(long *count, Contact *list){
     if(contact_num == 0){
         puts("No matching item found.");
     }else{
-        for(long i = 0; i < contact_num; i++){
+        for(int i = 0; i < contact_num; i++){
             print_contact(arr[i], list, i);
         }
     }
 
+    printf("Enter the number of the menu you want to delete.\n");
+    int delete_number = get_choice(0, contact_num);
+
+    for(int i = arr[delete_number - 1]; i < *count - 1; i++){
+        list[i] = list[i + 1];
+    }
+
+    *count -= 1;
     free(arr);
+    puts("Deleted.\n");
     return 0;
 }
