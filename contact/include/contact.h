@@ -12,5 +12,6 @@ void search_contact(long count, Contact *list);
 int search_by_name(long count, Contact *list, int *arr);
 int search_by_phone_number(long count, Contact *list, int *arr);
 int delete_contact(long *count, Contact *list);
+int modify_contact(long count, Contact *list);
 
 #endif

@@ -82,6 +82,7 @@ int get_yes_or_no(void){
 int get_string(char *string, size_t size){
     char buffer[size];
     for(;;){
+        printf("> ");
         if(fgets(buffer, size, stdin) == NULL){
             perror("Could not get input.");
             return -1;
@@ -97,6 +98,7 @@ int get_string(char *string, size_t size){
         }
 
         strcpy(string, buffer);
+        printf("\n");
         return 0;
     }
 }

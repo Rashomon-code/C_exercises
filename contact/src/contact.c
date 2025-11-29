@@ -18,13 +18,13 @@ int add_contact(long *count, long *capacity, Contact **list){
     }
 
     int check = 0;
-    printf("Enter the name please.\n> ");
+    printf("Enter the name please.\n");
     check = get_string(((*list) + *count)->name, sizeof(((*list) + *count)->name));
     if(check == -1){
         return -1;
     }
     
-    printf("Enter the phone number please.\n> ");
+    printf("Enter the phone number please.\n");
     check = get_string(((*list) + *count)->phone, sizeof(((*list) + *count)->phone));
     if(check == -1){
         return -1;
@@ -74,7 +74,7 @@ void search_contact(long count, Contact *list){
         puts("No matching item found.");
     }else{
         for(int i = 0; i < j; i++){
-            print_contact(arr[i], list, i);
+            print_contact(arr[i], list, arr[i]);
         }
     }
 
@@ -137,8 +137,12 @@ int delete_contact(long *count, Contact *list){
         }
     }
 
-    printf("Enter the number of the menu you want to delete.\n");
+    printf("Enter the number of the menu you want to delete.(Enter 0 to cancel)\n");
     int delete_number = get_choice(0, contact_num);
+    if(delete_number == 0){
+        free(arr);
+        return 0;
+    }
 
     for(int i = arr[delete_number - 1]; i < *count - 1; i++){
         list[i] = list[i + 1];
@@ -147,5 +151,35 @@ int delete_contact(long *count, Contact *list){
     *count -= 1;
     free(arr);
     puts("Deleted.\n");
+    return 0;
+}
+
+int modify_contact(long count, Contact *list){
+    puts("Modify by contact number. (You can search for the contact first using the search function.)");
+    puts("Enter '0' to exit.");
+    int contact_num = get_choice(0, count);
+
+    if(contact_num == 0 || contact_num == -1){
+        return contact_num;
+    }
+
+    modify_menu(contact_num, list);
+    int choice = get_choice(0, 2);
+    if(choice == 0 || choice == -1){
+        return 0;
+    }
+
+    int check;
+    switch(choice){
+        case 1:
+            printf("Enter the name please.\n");
+            check = get_string(list[contact_num - 1].name, sizeof(list[contact_num - 1].name));
+            break;
+        case 2:
+            printf("Enter the phone number please.\n");
+            check = get_string(list[contact_num - 1].phone, sizeof(list[contact_num - 1].phone));
+            break;
+    }
+
     return 0;
 }

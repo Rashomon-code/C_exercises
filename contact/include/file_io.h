@@ -4,6 +4,6 @@
 #include "contact.h"
 
 long read_data(Contact **list, long *capacity);
-int write_data(void);
+int write_data(int count, Contact **list);
 
 #endif

@@ -21,8 +21,14 @@ int main(void){
         if(choice == -1){
             continue;
         }else if(choice == 0){
-            free(list);
-            puts("Bye.");
+            check = write_data(count, &list);
+            if(check == -1){
+                continue;
+            }else if(check == 0){
+                puts("Bye.");
+            }else{
+                puts("Saved successfully.");
+            }
             return 0;
         }
 
@@ -46,6 +52,10 @@ int main(void){
                 }
                 break;
             case 5:
+                check = modify_contact(count, list);
+                if(check == -1){
+                    return -1;
+                }
                 break;
         }
     }

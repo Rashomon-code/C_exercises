@@ -52,3 +52,31 @@ long read_data(Contact **list, long *capacity){
     fclose(fp);
     return count;
 }
+
+int write_data(int count, Contact **list){
+    printf("Do you want to save the changes?(Y/n)\n> ");
+    int check = get_yes_or_no();
+    if(check == 0 || check == -1){
+        if(check == 0){
+            free(*list);
+            *list = NULL;
+        }
+        return check;
+    }
+
+    FILE *fp = fopen("data/generated/contact.dat", "wb");
+    if(!fp){
+        perror("Could not open the file.\n");
+        return -1;
+    }
+
+    long number = fwrite(*list, sizeof(Contact), count, fp);
+    if(number != count){
+        fprintf(stderr, "Could not save all contacts.\n");
+        return -1;
+    }
+
+    free(*list);
+    *list = NULL;
+    return 1;
+}
