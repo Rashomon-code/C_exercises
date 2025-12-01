@@ -120,7 +120,7 @@ int search_by_phone_number(long count, Contact *list, int *arr){
 }
 
 int delete_contact(long *count, Contact *list){
-    printf("Enter the name of contact you want to delete.\n> ");
+    printf("Enter the name of contact you want to delete.\n");
 
     int *arr = malloc(*count * sizeof(int));
     int contact_num = search_by_name(*count, list, arr);
@@ -166,7 +166,7 @@ int modify_contact(long count, Contact *list){
     modify_menu(contact_num, list);
     int choice = get_choice(0, 2);
     if(choice == 0 || choice == -1){
-        return 0;
+        return choice;
     }
 
     int check;
@@ -181,5 +181,6 @@ int modify_contact(long count, Contact *list){
             break;
     }
 
-    return 0;
+    check == 0 ? puts("Modified successfully.") : puts("Modification failed.");
+    return check;
 }
