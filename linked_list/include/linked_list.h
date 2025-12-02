@@ -1,12 +1,12 @@
 #ifndef LINKED_LIST_H
 #define LINKED_LIST_H
 
-typedef struct list{
+typedef struct node{
     int value;
     struct list *previous;
     struct list *next;
-}list;
+}node;
 
-int create_node(void);
+node* create_node(int value);
 
 #endif

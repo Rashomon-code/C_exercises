@@ -1,6 +1,13 @@
 #include "linked_list.h"
+#include <stdlib.h>
+#include "io.h"
 
-int create_node(void){
-    list *buffer;
-    return 0;
+node* create_node(int value){
+    node *new;
+
+    new->value = value;
+    new->previous = NULL;
+    new->next = NULL;
+
+    return new;
 }
