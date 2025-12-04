@@ -3,10 +3,13 @@
 
 typedef struct node{
     int value;
-    struct list *previous;
-    struct list *next;
-}node;
+    struct node *previous;
+    struct node *next;
+}Node;
 
-node* create_node(int value);
+int init_list(Node **head, Node **tail);
+Node* create_node(int value);
+int head_insert(Node **head, Node **tail);
+int tail_insert(Node **head, Node **tail);
 
 #endif

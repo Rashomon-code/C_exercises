@@ -1,4 +1,5 @@
 #include "io.h"
+#include <ctype.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
@@ -10,7 +11,9 @@ int get_value(int *value){
     char *endptr;
 
     for(;;){
+        printf("> ");
         if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
+            fprintf(stderr, "Error reading input.\n");
             return -1;
         }
 
@@ -41,5 +44,35 @@ int get_value(int *value){
 
         *value = (int)vtmp;
         return 0;
+    }
+}
+
+int get_yes_or_no(void){
+    char buffer[BUFFER_SIZE];
+    
+    for(;;){
+        if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
+            fprintf(stderr, "Error reading input.\n");
+            return -1;
+        }
+
+        if(buffer[0] == '\n'){
+            fprintf(stderr, "Empty input.\n");
+            continue;
+        }
+
+        if(buffer[1] != '\n'){
+            fprintf(stderr, "Input too long.\n");
+            continue;
+        }
+
+        if(tolower(buffer[0]) == 'n'){
+            return 0;
+        }else if(tolower(buffer[0]) == 'y'){
+            return 1;
+        }else{
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
     }
 }
