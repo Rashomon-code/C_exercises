@@ -4,21 +4,6 @@
 #include <stdio.h>
 #include "io.h"
 
-int init_list(Node **head, Node **tail){
-    FILE *fp = fopen("data/generated/list.dat", "rb");
-    if(!fp){
-        init_menu();
-        int choice = get_yes_or_no();
-        if(choice != 1){
-            return choice;
-        }
-
-        *head = NULL;
-        *tail = NULL;
-        return 0;
-    }
-}
-
 Node* create_node(int value){
     Node *new_node = malloc(sizeof(Node));
     if(!new_node){
@@ -33,13 +18,7 @@ Node* create_node(int value){
     return new_node;
 }
 
-int head_insert(Node **head, Node **tail){
-    int value, check = 0;
-    check = get_value(&value);
-    if(check == -1){
-        return -1;
-    }
-
+int head_insert(Node **head, Node **tail, int value){
     Node *new_node = create_node(value);
     if(!new_node){
         return -1;
@@ -57,13 +36,7 @@ int head_insert(Node **head, Node **tail){
     return 0;
 }
 
-int tail_insert(Node **head, Node **tail){
-    int value, check = 0;
-    check = get_value(&value);
-    if(check == -1){
-        return -1;
-    }
-
+int tail_insert(Node **head, Node **tail, int value){
     Node *new_node = create_node(value);
     if(!new_node){
         return -1;
@@ -79,4 +52,18 @@ int tail_insert(Node **head, Node **tail){
     }
 
     return 0;
+}
+
+void free_list(Node **head, Node **tail){
+    Node *current = *head;
+    Node *next = NULL;
+
+    while(current != NULL){
+        next = current->next;
+        free(current);
+        current = next;
+    }
+
+    *head = NULL;
+    *tail = NULL;
 }

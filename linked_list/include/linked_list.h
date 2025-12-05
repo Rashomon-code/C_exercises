@@ -7,9 +7,9 @@ typedef struct node{
     struct node *next;
 }Node;
 
-int init_list(Node **head, Node **tail);
 Node* create_node(int value);
-int head_insert(Node **head, Node **tail);
-int tail_insert(Node **head, Node **tail);
+int head_insert(Node **head, Node **tail, int value);
+int tail_insert(Node **head, Node **tail, int value);
+void free_list(Node **head, Node **tail);
 
 #endif

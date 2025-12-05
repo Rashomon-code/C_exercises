@@ -51,6 +51,7 @@ int get_yes_or_no(void){
     char buffer[BUFFER_SIZE];
     
     for(;;){
+        printf("> ");
         if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
             fprintf(stderr, "Error reading input.\n");
             return -1;
