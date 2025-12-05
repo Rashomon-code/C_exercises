@@ -12,3 +12,10 @@ void main_menu(void){
 void init_menu(void){
     puts("Do you want to create a new list.(Y/N)");
 }
+
+void exit_menu(void){
+    puts("Do you want to save vefore exiting.(0~2)");
+    puts("1. Save");
+    puts("2. Don't Save");
+    puts("0. Cancel");
+}

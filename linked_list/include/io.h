@@ -5,5 +5,6 @@
 
 int get_value(int *value);
 int get_yes_or_no(void);
+int get_choice(int min, int max);
 
 #endif

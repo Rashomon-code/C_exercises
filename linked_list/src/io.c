@@ -77,3 +77,39 @@ int get_yes_or_no(void){
         }
     }
 }
+
+int get_choice(int min, int max){
+    char buffer[BUFFER_SIZE];
+    char *endptr;
+    long choice;
+
+    for(;;){
+        printf("> ");
+        if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
+            perror("fgets failed");
+            return -1;
+        }
+
+        if(buffer[0] == '\n'){
+            fprintf(stderr, "Empty input.\n");
+            continue;
+        }
+
+        if(strchr(buffer, '\n') == NULL){
+            fprintf(stderr, "Input too long.\n");
+            int ch;
+            while((ch = getchar()) != '\n' && ch != EOF);
+            continue;
+        }else{
+            buffer[strcspn(buffer, "\n")] = '\0';
+        }
+
+        choice = strtol(buffer, &endptr, 10);
+        if(*endptr != '\0' || choice < min || choice > max){
+            fprintf(stderr, "Invalid input.\n");
+            continue;
+        }
+
+        return (int)choice;
+    }
+}
