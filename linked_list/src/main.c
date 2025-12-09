@@ -20,7 +20,36 @@ int main(void){
             continue;
         }
         if(choice == 0){
-            break;
+            exit_menu();
+            int exit_choice = get_choice(0, 2);
+            if(exit_choice == 1){
+                check = save_list(head, tail);
+                if(check == 0){
+                    puts("Saved successful.");
+                    break;
+                }
+            }else if(exit_choice == 2){
+                break;
+            }
+        }
+
+        switch(choice){
+            int value;
+            case 1:
+                check = get_value(&value);
+                if(check == 0){
+                    head_insert(&head, &tail, value);
+                }
+                break;
+            case 2:
+                check = get_value(&value);
+                if(check == 0){
+                    tail_insert(&head, &tail, value);
+                }
+                break;
+            case 3:
+                print_list(head);
+                break;
         }
     }
 

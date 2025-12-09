@@ -1,4 +1,5 @@
 #include "io.h"
+#include "linked_list.h"
 #include <ctype.h>
 #include <stdio.h>
 #include <string.h>
@@ -11,7 +12,7 @@ int get_value(int *value){
     char *endptr;
 
     for(;;){
-        printf("> ");
+        printf("Enter the value: ");
         if(fgets(buffer, BUFFER_SIZE, stdin) == NULL){
             fprintf(stderr, "Error reading input.\n");
             return -1;
@@ -112,4 +113,12 @@ int get_choice(int min, int max){
 
         return (int)choice;
     }
+}
+
+void print_list(Node *head){
+    while(head != NULL){
+        printf("%d -> ", head->value);
+        head = head->next;
+    }
+    printf("NULL\n");
 }
