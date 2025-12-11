@@ -5,7 +5,9 @@ void main_menu(void){
     puts("Enter the number of the menu.(0~3)");
     puts("1. Insert value at the beginning.");
     puts("2. Insert value at the end.");
-    puts("3. Print the list.");
+    puts("3. Delete the node.");
+    puts("4. Print the list.");
+    puts("5. Toggle cycle.");
     puts("0. Exit.");
 }
 

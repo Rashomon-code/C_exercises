@@ -7,15 +7,16 @@
 
 int main(void){
     Node *head, *tail;
+    int list_size;
     int check;
-    check = init_list(&head, &tail);
+    check = init_list(&head, &tail, &list_size);
     if(check != 1){
         return check;
     }
 
     for(;;){
         main_menu();
-        int choice = get_choice(0, 3);
+        int choice = get_choice(0, 5);
         if(choice == -1){
             continue;
         }
@@ -38,17 +39,23 @@ int main(void){
             case 1:
                 check = get_value(&value);
                 if(check == 0){
-                    head_insert(&head, &tail, value);
+                    head_insert(&head, &tail, value, &list_size);
                 }
                 break;
             case 2:
                 check = get_value(&value);
                 if(check == 0){
-                    tail_insert(&head, &tail, value);
+                    tail_insert(&head, &tail, value, &list_size);
                 }
                 break;
             case 3:
+                check = delete_node(&head, &tail, &list_size);
+                break;
+            case 4:
                 print_list(head);
+                break;
+            case 5:
+                toggle_cycle(head, tail);
                 break;
         }
     }

@@ -3,7 +3,7 @@
 
 #include "linked_list.h"
 
-int init_list(Node **head, Node **tail);
+int init_list(Node **head, Node **tail, int *list_size);
 int save_list(Node *head, Node *tail);
 
 #endif

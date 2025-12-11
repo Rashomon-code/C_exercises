@@ -116,9 +116,22 @@ int get_choice(int min, int max){
 }
 
 void print_list(Node *head){
-    while(head != NULL){
-        printf("%d -> ", head->value);
-        head = head->next;
+    Node *tmp = head;
+    int i = 1;
+    if(head->previous == NULL){
+        while(tmp != NULL){
+            printf("%d. %d ->\n", i, tmp->value);
+            tmp = tmp->next;
+            i++;
+        }
+        printf("NULL\n");
+    }else{
+        i = 1;
+        do{
+            printf("%d. %d ->\n", i, tmp->value);
+            tmp = tmp->next;
+            i++;
+        }while(tmp != head);
+        printf("1. %d\n", tmp->value);
     }
-    printf("NULL\n");
 }

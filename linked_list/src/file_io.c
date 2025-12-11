@@ -4,9 +4,10 @@
 #include "io.h"
 #include "linked_list.h"
 
-int init_list(Node **head, Node **tail){
+int init_list(Node **head, Node **tail, int *list_size){
     *head = NULL;
     *tail = NULL;
+    *list_size = 0;
     
     FILE *fp = fopen("data/generated/list.dat", "rb");
     if(!fp){
@@ -18,7 +19,7 @@ int init_list(Node **head, Node **tail){
 
     int value;
     while(fread(&value, sizeof(int), 1, fp) == 1){
-        int check = tail_insert(head, tail, value);
+        int check = tail_insert(head, tail, value, list_size);
         if(check == -1){
             fprintf(stderr, "Failed to load data.\n");
             fclose(fp);
@@ -44,16 +45,30 @@ int save_list(Node *head, Node *tail){
     }
 
     Node *tmp = head;
-    while(tmp != NULL){
-        if(fwrite(&(tmp->value), sizeof(int), 1, fp) != 1){
-            fprintf(stderr, "Failed to save data.\n");
-            if(ferror(fp)){
-                perror("System error during write.");
+    if(head->previous == NULL){
+        while(tmp != NULL){
+            if(fwrite(&tmp->value, sizeof(int), 1, fp) != 1){
+                fprintf(stderr, "Failed to save data.\n");
+                if(ferror(fp)){
+                    perror("System error during write.");
+                }
+                fclose(fp);
+                return -1;
             }
-            fclose(fp);
-            return -1;
+            tmp = tmp->next;
         }
-        tmp = tmp->next;
+    }else{
+        do{
+            if(fwrite(&tmp->value, sizeof(int), 1, fp) != 1){
+                fprintf(stderr, "Failed to save data.\n");
+                if(ferror(fp)){
+                    perror("System error during write.");
+                }
+                fclose(fp);
+                return -1;
+            }
+            tmp = tmp->next;
+        }while(tmp != head);
     }
 
     if(fclose(fp) == EOF){
