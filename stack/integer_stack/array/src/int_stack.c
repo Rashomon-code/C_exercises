@@ -38,3 +38,13 @@ int push(Stack *a, int value){
         return 0;
     }
 }
+
+int pop(Stack *a){
+    if(is_empty(*a)){
+        puts("The stack is empty.");
+        return 1;
+    }else{
+        printf("Popped value: %d\n", a->value[a->top--]);
+        return 0;
+    }
+}

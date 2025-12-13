@@ -13,5 +13,6 @@ int is_empty(Stack a);
 int is_full(Stack a);
 void peek(Stack a);
 int push(Stack *a, int value);
+int pop(Stack *a);
 
 #endif

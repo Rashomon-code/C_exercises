@@ -17,5 +17,9 @@ int main(void){
 
     peek(a);
 
+    pop(&a);
+
+    peek(a);
+
     return 0;
 }
