@@ -7,5 +7,6 @@ typedef struct node{
 }node;
 
 node *create_new_node(int data);
+void free_list(node **head);
 
 #endif

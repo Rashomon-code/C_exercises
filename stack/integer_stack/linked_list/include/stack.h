@@ -6,5 +6,6 @@
 void peek(node *head);
 int is_empty(node *head);
 int push(int value, node **head);
+void pop(node **head);
 
 #endif

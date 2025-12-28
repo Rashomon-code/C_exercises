@@ -12,3 +12,12 @@ node *create_new_node(int data){
     new->data = data;
     return new;
 }
+
+void free_list(node **head){
+    node *tmp;
+    while(*head != NULL){
+        tmp = (*head)->next;
+        free(*head);
+        *head = tmp;
+    }
+}

@@ -3,9 +3,8 @@
 #include <stdio.h>
 
 void peek(node *head){
-    if(is_empty){
+    if(is_empty(head)){
         fprintf(stderr, "The stack is empty.\n");
-        return;
     }else{
         fprintf(stdout, "Top: %d\n", head->data);
     }
@@ -28,4 +27,13 @@ int push(int value, node **head){
     new->next = *head;
     *head = new;
     return 0;
+}
+
+void pop(node **head){
+    if(is_empty(*head)){
+        fprintf(stderr, "The stack is empty.\n");
+    }else{
+        fprintf(stdout, "Pop the top: %d\n", (*head)->data);
+        *head = (*head)->next;
+    }
 }
