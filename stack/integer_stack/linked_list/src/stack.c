@@ -34,6 +34,8 @@ void pop(node **head){
         fprintf(stderr, "The stack is empty.\n");
     }else{
         fprintf(stdout, "Pop the top: %d\n", (*head)->data);
+        node *temp = *head;
         *head = (*head)->next;
+        free(temp);
     }
 }
